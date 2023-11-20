@@ -1,15 +1,27 @@
 package com.example.jobfindernew;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "User")
 public class User {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     public int userId;
 
-    public String username;
     public String email;
-    // Các trường khác
+    public String password;
 
+    @ColumnInfo(name = "socialMediaId")
+    public String socialMediaId;
+
+    @ColumnInfo(name = "userName")
+    public String userName;
+
+    @ColumnInfo(name = "fullName")
+    public String fullName;
+
+    @ColumnInfo(name = "createdAt")
+    public String createdAt;
 }
+
