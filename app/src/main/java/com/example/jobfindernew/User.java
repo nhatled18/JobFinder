@@ -11,6 +11,7 @@ public class User {
 
     public String email;
     public String password;
+    public String avatar;
 
     @ColumnInfo(name = "socialMediaId")
     public String socialMediaId;

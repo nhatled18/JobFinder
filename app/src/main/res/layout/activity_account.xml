@@ -9,9 +9,10 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_margin="16dp"
-        android:src="@drawable/avatar"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
+        />
 
     <TextView
         android:id="@+id/tv_name"
@@ -20,9 +21,9 @@
         android:layout_margin="16dp"
         android:text="Tên"
         android:textSize="18sp"
-        app:layout_constraintTop_toTopOf="@id/iv_avatar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_avatar"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/iv_avatar" />
 
     <TextView
         android:id="@+id/tv_email"
@@ -31,9 +32,9 @@
         android:layout_margin="16dp"
         android:text="Email"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_avatar"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
     <Button
         android:id="@+id/btn_update"
