@@ -23,7 +23,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod 775 gradlew
       - name: Build debug APK
-        run: ./gradlew assembleDebug --scan
+        run: ./gradlew assembleDebug --stacktrace
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
@@ -44,4 +44,4 @@ jobs:
           api-level: 29
           script: adb install app-debug/app-debug.apk
       - name: Run Instrumented Tests
-        run: ./gradlew connectedCheck --scan
+        run: ./gradlew connectedCheck --stacktrace
