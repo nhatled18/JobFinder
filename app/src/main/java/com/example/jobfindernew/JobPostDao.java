@@ -23,6 +23,8 @@ public interface JobPostDao {
     JobPost getJobPostById(int jobId);
 
     @Query("SELECT * FROM JobPost")
-    List<JobPost> getAllJobPosts();
+    static List<JobPost> getAllJobPosts() {
+        return null;
+    }
 }
 
