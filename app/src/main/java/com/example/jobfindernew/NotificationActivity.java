@@ -1,8 +1,11 @@
 package com.example.jobfindernew;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 public class NotificationActivity extends AppCompatActivity {
 

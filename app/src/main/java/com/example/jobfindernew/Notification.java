@@ -20,5 +20,13 @@ public class Notification {
 
     @ColumnInfo(name = "createdAt")
     public String createdAt;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
 }
 
