@@ -1,0 +1,72 @@
+name: Attempt To Fix An Android App
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: '*/5 * * * *' # Run every 5 minutes
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+      - name: Grant execute permission for gradlew
+        run: chmod 775 gradlew
+      - name: Reformat code
+        run: ./gradlew spotlessApply
+      - name: Rearrange code
+        run: ./gradlew rearrange
+      - name: Optimize imports
+        run: ./gradlew optimizeImports
+      - name: Analyze code
+        run: ./gradlew lint
+      - name: Check TODO
+        run: ./gradlew todo
+      - name: Cleanup
+        run: ./gradlew clean
+      - name: Run tests
+        run: ./gradlew test
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: app/build/reports/tests/testDebugUnitTest
+  update:
+    name: Update and Commit
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Download test results
+        uses: actions/download-artifact@v2
+        with:
+          name: test-results
+      - name: Configure git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+      - name: Update README.md
+        run: |
+          echo "## Test Results" >> README.md
+          echo "" >> README.md
+          cat test-results/index.html >> README.md
+      - name: Update LICENSE
+        run: |
+          YEAR=$(date +"%Y")
+          sed -i "s/2023/$YEAR/g" LICENSE
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Update README.md and LICENSE"
+          git push
