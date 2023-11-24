@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.AsyncTask;
+
 public class LoginActivity extends AppCompatActivity {
 
     private AppDatabase appDatabase;
@@ -21,8 +23,18 @@ public class LoginActivity extends AppCompatActivity {
         // Khởi tạo database
         appDatabase = AppDatabase.getInstance(this);
 
-        // Thêm một User làm dummy
-        addDummyUser();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getInstance(LoginActivity.this);
+                UserDao userDao = database.userDao();
+                // Perform database operations here
+                addDummyUser(userDao);
+            }
+        });
+        thread.start();
+
+        new DatabaseTask().execute();
 
         Button btnLogin = findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void addDummyUser() {
+    private void addDummyUser(UserDao userDao) {
         // Kiểm tra xem user có tồn tại không
         if (appDatabase.userDao().getUserByEmail("dummy@example.com") == null) {
             User dummyUser = new User();
@@ -61,4 +73,23 @@ public class LoginActivity extends AppCompatActivity {
             appDatabase.userDao().insert(dummyUser);
         }
     }
+
+    private class DatabaseTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            AppDatabase database = AppDatabase.getInstance(LoginActivity.this);
+            UserDao userDao = database.userDao();
+            // Perform database operations here
+            User user = userDao.getUserByEmail("dummy@example.com");
+            // Handle the result as needed
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // Update UI or perform any other post-execution tasks
+        }
+    }
+
 }
