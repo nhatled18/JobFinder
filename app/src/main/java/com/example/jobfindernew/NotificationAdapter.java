@@ -1,4 +1,4 @@
-package com.example.jobfindernew
+package com.example.jobfindernew;
 
 import android.view.LayoutInflater;
 import android.view.View;
