@@ -3,6 +3,7 @@ package com.example.jobfindernew;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "UserJobRelation", foreignKeys = {
@@ -14,7 +15,8 @@ import androidx.room.PrimaryKey;
                 parentColumns = "jobId",
                 childColumns = "jobId",
                 onDelete = ForeignKey.CASCADE)
-})
+},
+        indices = {@Index("userId"), @Index("jobId")})
 public class UserJobRelation {
     @PrimaryKey
     public int userJobRelationId;
